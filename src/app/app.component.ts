@@ -24,7 +24,7 @@ export class AppComponent implements OnInit{
       nombre:['', Validators.required],
       apellido:['', Validators.required],
       email:['', Validators.required],
-      telefono:[0, Validators.required],
+      telefono:['', Validators.required],
       puesto:['', Validators.required]
     });
   }
@@ -38,14 +38,33 @@ export class AppComponent implements OnInit{
     }
   }*/
 
-  validateEmail(email:string):boolean{
-    var validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
-  
-    if( validEmail.test(email) ){
-      console.log('Email is valid, continue with form submission');
+  validateEmailTel():boolean{
+    var validEmail = new RegExp(/^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/);
+    var validTelefono = new RegExp("^(\\+34|0034|34)?[6789]\\d{8}$");
+
+    if( validEmail.test(this.formularioEmpleado.value.email) 
+      && validTelefono.test(this.formularioEmpleado.value.telefono) ){
+      console.log('Email and Telephone is valid, continue with form submission');
+      this.formularioEmpleado.value.telefono = Number(this.formularioEmpleado.value.telefono);
+      console.log(this.formularioEmpleado.value.telefono);
       return true;
     }else{
-      alert('Email is invalid, skip form submission');
+      if( !validEmail.test(this.formularioEmpleado.value.email) 
+        && !validTelefono.test(this.formularioEmpleado.value.telefono) ){
+        alert('Email and telephone is invalid, skip form submission');
+        this.formularioEmpleado.value.email = "";
+        this.formularioEmpleado.value.telefono = "";
+      }else{
+        if( !validEmail.test(this.formularioEmpleado.value.email) ){
+          alert('Email is invalid, skip form submission');
+          this.formularioEmpleado.value.email = "";
+        }
+        if( !validTelefono.test(this.formularioEmpleado.value.telefono) ){
+          alert('Telephone is invalid, skip form submission');
+          this.formularioEmpleado.value.telefono = "";
+        }
+      }
+      
       return false;
     }
   } 
@@ -62,8 +81,12 @@ export class AppComponent implements OnInit{
     this.obtenerEmpleados();
   }
 
+  nextPage(){
+
+  }
+
   agregarEmpleado(){
-    const request:Empleado = {
+    const request = {
       id:Math.floor(Math.random() * 500) + 1,
       nombre:this.formularioEmpleado.value.nombre,
       apellido:this.formularioEmpleado.value.apellido,
@@ -73,7 +96,7 @@ export class AppComponent implements OnInit{
     }
 
     console.log(request);
-    this.validateEmail(request.email) ? this._empleadoServicio.addEmployee(request).subscribe({
+    this.validateEmailTel() ? this._empleadoServicio.addEmployee(request).subscribe({
       next:(data) => {
         if(this.listaEmplados.length < 10) {
           this.listaEmplados.push(data);
@@ -83,15 +106,15 @@ export class AppComponent implements OnInit{
           nombre:"",
           apellido:"",
           email:"",
-          telefono:0,
+          telefono:"",
           puesto:""
         })
         console.log(this.listaEmplados);
       }, error:(e) => {console.log(e)}
     }) : 
     this.formularioEmpleado.patchValue({
-      email:""
-    })
-    ;
+      email:this.formularioEmpleado.value.email,
+      telefono:this.formularioEmpleado.value.telefono
+    });
   }
 }

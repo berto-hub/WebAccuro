@@ -1,6 +1,6 @@
-<div class="container mt-5 pt-5">
+<div class="container">
   <div class="row justify-content-center">
-    <div class="col-12 col-xl-4 col-md-6">
+    <div class="col-20 col-xl-10 col-md-10">
       <div class="card">
         <div class="card-header">
           Lista de empleados:
@@ -11,7 +11,7 @@
               <input type="text" class="form-control" placeholder="Nombre" formControlName="nombre">
               <input type="text" class="form-control" placeholder="Apellido" formControlName="apellido">
               <input type="text" class="form-control" placeholder="Email" formControlName="email">
-              <input type="number" class="form-control" placeholder="Telefono" formControlName="telefono">
+              <input type="text" class="form-control" placeholder="Telefono" formControlName="telefono">
               <input type="text" class="form-control" placeholder="Puesto" formControlName="puesto">
               <button class="btn btn-primary" type="button" [disabled]="formularioEmpleado.invalid"
                 (click)="agregarEmpleado()"
@@ -23,6 +23,14 @@
             <button class="btn btn-primary" type="button"
               (click)="obtenerEmpleados()"
             >Buscar</button>
+          </div>
+          <div class="card-body col d-flex justify-content-between">
+            <label>Id</label>
+            <label>Nombre</label>
+            <label>Apellido</label>
+            <label>Email</label>
+            <label>Teléfono</label>
+            <label>Puesto</label>
           </div>
           <ul class="list-group">
             <li class="list-group-item" *ngFor="let empleado of listaEmplados">
@@ -36,11 +44,13 @@
               </div>
             </li>
           </ul>
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Página" [(ngModel)]="pagina">
-            <button class="btn btn-primary" type="button"
-              (click)="obtenerEmpleados()"
-            >Ir a</button>
+          <div class="col d-flex justify-content-center m-3">
+            <button class="btn btn-primary" type="button" *ngIf="pagina>1" name="fieldName" ngDefaultControl [(ngModel)]="pagina"
+              (click)="pagina=pagina-1" (click)="obtenerEmpleados()" 
+            >Anterior</button>
+            <button class="btn btn-primary" type="button" *ngIf="pagina>=1 && listaEmplados.length==10" name="fieldName" ngDefaultControl [(ngModel)]="pagina"
+              (click)="pagina=pagina+1" (click)="obtenerEmpleados()"
+            >Siguiente</button>
           </div>
         </div>
       </div>
