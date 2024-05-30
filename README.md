@@ -28,4 +28,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Descripción de la aplicación
 
-En este programa se presenta una API Rest creada con C# basándose en la idea de la creación de un listado de empleados. PErmite realizar el añadido y la visualización de los empleados. Contiene una base de datos SQLite local.
+En este programa se presenta el frontend de la web que consiste en la presentación de un listado de empleados y su inserción de nuevos. Hace peticiones de una API Rest creada en C#. El código del programa está basado en Angular con TypesCript.
