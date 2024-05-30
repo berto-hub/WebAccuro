@@ -25,3 +25,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Descripción de la aplicación
+
+En este programa se presenta una API Rest creada con C# basándose en la idea de la creación de un listado de empleados. PErmite realizar el añadido y la visualización de los empleados. Contiene una base de datos SQLite local.
